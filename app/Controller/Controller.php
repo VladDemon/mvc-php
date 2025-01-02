@@ -1,4 +1,5 @@
 <?php
+// App main abstract controller;
 
 namespace App\Controller;
 
