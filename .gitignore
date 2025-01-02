@@ -1,0 +1,9 @@
+
+.codegpt
+.env
+vendor/
+composer.lock
+access.log
+error.log
+.vscode/
+.codegpt/
