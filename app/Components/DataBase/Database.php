@@ -3,7 +3,7 @@
 namespace App\Components\DataBase;
 use App\Components\Interfaces\DatabaseInterface;
 use PDO;
-
+use PDOException;
 class Database implements DatabaseInterface
 {
     private $db;
