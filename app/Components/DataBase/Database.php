@@ -11,7 +11,6 @@ class Database implements DatabaseInterface
     public function __construct() {
         $this->initDbConnection();
     }
-
     private function initDbConnection(): void {
         $host = $_ENV["DB_HOST"];
         $dbname = $_ENV["DB_NAME"]; 
@@ -33,6 +32,6 @@ class Database implements DatabaseInterface
         $query = $db->prepare($query);
         $query->execute();
 
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }
