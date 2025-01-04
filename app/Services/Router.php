@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
 class Router
 {
     private static $route_list = [];
@@ -61,5 +58,9 @@ class Router
         if (!$routeFound) {
             header("Location: 404");
         }
+    }
+
+    public static function redirect($uri): void {
+        header("Location: " . $uri);
     }
 }

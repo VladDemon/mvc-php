@@ -18,7 +18,7 @@ class Database implements DatabaseInterface
         $password = $_ENV["DB_PASSWORD"];
         $port = $_ENV['DB_PORT'];
         try {
-            $this->db = new PDO("mysql:host=$host:$port;dbname=$dbname;charset=utf8", $username, $password);
+            $this->db = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $username, $password);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die('Connection failed: ' . $e->getMessage());
