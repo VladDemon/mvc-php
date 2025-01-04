@@ -5,14 +5,18 @@ namespace App\Services;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class Route
+class Router
 {
     private static $route_list = [];
-    public static function route($uri, $controller) : void {
+    public static function page($uri, $controller) : void {
         self::$route_list[] = [
             "uri" => $uri,
             "controller" => $controller
         ];
+    }
+
+    public static function post (string $uri, string $method) : void {
+
     }
 
     public static function enable() : void {

@@ -1,10 +1,10 @@
 <?php 
-App\Services\Route::route("/","IndexController@index");
-App\Services\Route::route('/test', 'TestController@index');
-App\Services\Route::route('/signIn','LoginController@index');
-App\Services\Route::route('/register','RegisterController@index');
-App\Services\Route::route("/404", "Controller404@index");
+App\Services\Router::page("/","IndexController@index");
+App\Services\Router::page('/test', 'TestController@index');
+App\Services\Router::page('/signIn','LoginController@index');
+App\Services\Router::page('/register','RegisterController@index');
+App\Services\Router::page("/404", "Controller404@index");
 
 
-App\Services\Route::enable();
+App\Services\Router::enable();
 ?>
