@@ -8,10 +8,11 @@ use Twig\Loader\FilesystemLoader;
 class Router
 {
     private static $route_list = [];
-    public static function page($uri, $controller) : void {
+    public static function get($uri, $controller) : void {
         self::$route_list[] = [
-            "uri" => $uri,
-            "controller" => $controller
+            "uri"           => $uri,
+            "controller"    => $controller,
+            'type'          => 'get'
         ];
     }
 
@@ -20,27 +21,41 @@ class Router
             "uri"           => $uri,
             "controller"    => $controller,
             'method'        => $method,
+            'type'          => "post"
         ];
+    }
+
+
+    private static function format_post_data (array $data) : array {
+        $result = [];
+        foreach($data as $key => $value) {
+            $result[$key] = htmlspecialchars($value);
+        }
+        return $result;
     }
 
     public static function enable() : void {
         $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $routeFound = false;
-
-        // $loader = new FilesystemLoader(__DIR__ . '/../View/');
-        // $twig = new Environment($loader);
         foreach (self::$route_list as $route) {
             if ($route['uri'] === $query) {
-                $routeFound = true; 
-                [$controller, $method] = explode('@', $route['controller']);
-                $controller = "App\\Controller\\{$controller}";
-                if (class_exists($controller) && method_exists($controller, $method)) {
-                    $instance = new $controller();
-                    echo $instance->$method();
+                if($route['type'] == 'post' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $action = new $route['controller'];
+                    $method = $route['method'];
+                    $action->$method(self::format_post_data($_POST));
+                    die();
                 } else {
-                    header("Location: 404");
+                    $routeFound = true;
+                    [$controller, $method] = explode('@', $route['controller']);
+                    $controller = "App\\Controller\\{$controller}";
+                    if (class_exists($controller) && method_exists($controller, $method)) {
+                        $instance = new $controller();
+                        echo $instance->$method();
+                    } else {
+                        header("Location: 404");
+                    }
+                    break;
                 }
-                break;
             }
         }
         if (!$routeFound) {
