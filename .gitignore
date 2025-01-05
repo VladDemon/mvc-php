@@ -1,4 +1,5 @@
 
+sessions/
 .codegpt
 .env
 vendor/

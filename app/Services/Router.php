@@ -5,11 +5,12 @@ namespace App\Services;
 class Router
 {
     private static $route_list = [];
-    public static function get($uri, $controller) : void {
+    public static function get($uri, $controller, $is_private = false) : void {
         self::$route_list[] = [
             "uri"           => $uri,
             "controller"    => $controller,
-            'type'          => 'get'
+            'type'          => 'get',
+            'private'       => $is_private,
         ];
     }
 
