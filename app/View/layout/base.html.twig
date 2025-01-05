@@ -23,6 +23,9 @@
                             {% if is_logged %}
                                 <div style='display: flex; gap : 20px;'>
                                     <span>Ваш профиль</span>{{ is_logged['name'] }}
+                                    <form method="get" action='/logout'>
+                                        <button >LogOut</button>
+                                    </form>
                                 </div>
                             {% else %}
                                 <ul class="navbar-nav">

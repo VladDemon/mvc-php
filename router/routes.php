@@ -1,6 +1,6 @@
 <?php 
-App\Services\Router::get("/","IndexController@index");
-App\Services\Router::get('/test', 'TestController@index');
+App\Services\Router::get("/","IndexController@index", [App\Components\Middleware\AuthMiddleware::class]);
+App\Services\Router::get('/test', 'TestController@index', [App\Components\Middleware\AuthMiddleware::class]);
 App\Services\Router::get('/signIn','LoginController@index');
 App\Services\Router::get("/404", "Controller404@index");
 App\Services\Router::get("/logout", "AuthController@logout");
