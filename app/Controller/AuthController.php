@@ -72,9 +72,12 @@ class AuthController extends Controller
     public function logout()
     {
         session_start();
+        $sesFile = session_save_path() . '/sess' . session_id();
         session_unset();
         session_destroy();
-
+        if (file_exists($sesFile)) {
+            unlink($sesFile);
+        }
         Router::redirect("/signIn");
     }
 
