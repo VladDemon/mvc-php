@@ -37,7 +37,7 @@ class Router
     public static function enable(): void {
         $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $routeFound = false;
-    
+        
         foreach (self::$route_list as $route) {
             if ($route['uri'] === $query) {
                 if ($route['type'] == 'post' && $_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -76,13 +76,14 @@ class Router
     
     private static function runMiddlewares($middlewares, $next) {
         $handler = $next;
+        $request = ($_SERVER['REQUEST_METHOD'] === 'POST') ? self::format_post_data($_POST) : $_GET;
         foreach (array_reverse($middlewares) as $middleware) {
             $handler = function($request) use ($middleware, $handler) {
-                $middlewareInstance = new $middleware();
+                $middlewareInstance = is_object($middleware) ? $middleware : new $middleware();
                 return $middlewareInstance->handle($request, $handler);
             };
         }
-        $handler(null);
+        $handler($request);
     }
     public static function redirect($uri): void {
         header("Location: " . $uri);
