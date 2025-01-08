@@ -31,11 +31,11 @@ class AuthController extends Controller
             ]);
 
             session_start();
-            $_SESSION['user'] = [
-                'id' => $this->db->getDb()->lastInsertId(),
-                'name' => $name,
-                'email' => $email
-            ];
+            // $_SESSION['user'] = [
+            //     'id' => $this->db->getDb()->lastInsertId(),
+            //     'name' => $name,
+            //     'email' => $email
+            // ];
 
             Router::redirect("/signIn");
         } catch (Exception $e) {

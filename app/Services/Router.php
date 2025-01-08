@@ -26,7 +26,7 @@ class Router
     }
 
 
-    private static function format_post_data (array $data) : array {
+    private static function sanitaize_data (array $data) : array {
         $result = [];
         foreach($data as $key => $value) {
             $result[$key] = htmlspecialchars($value);
@@ -45,9 +45,8 @@ class Router
                     self::runMiddlewares($route['middlewares'] ?? [], function() use ($route) {
                         $action = new $route['controller'];
                         $method = $route['method'];
-                        $action->$method(self::format_post_data($_POST));
+                        $action->$method(self::sanitaize_data($_POST));
                     });
-    
                     die();
                 } else {
                     $routeFound = true;
@@ -76,7 +75,7 @@ class Router
     
     private static function runMiddlewares($middlewares, $next) {
         $handler = $next;
-        $request = ($_SERVER['REQUEST_METHOD'] === 'POST') ? self::format_post_data($_POST) : $_GET;
+        $request = ($_SERVER['REQUEST_METHOD'] === 'POST') ? self::sanitaize_data($_POST) : $_GET;
         foreach (array_reverse($middlewares) as $middleware) {
             $handler = function($request) use ($middleware, $handler) {
                 $middlewareInstance = is_object($middleware) ? $middleware : new $middleware();
