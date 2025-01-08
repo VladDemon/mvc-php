@@ -1,0 +1,21 @@
+{% extends "./layout/base.html.twig" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    
+    <div class="profile">
+        <h2>User Profile</h2>
+        <div class="profile-info">
+            <p><strong>Name:</strong> {{ user["name"] }}</p>
+            <p><strong>Email:</strong> {{ user['email'] }}</p>
+            <p><strong>Joined on:</strong> {{ user['created_at']|date('F j, Y') }}</p>
+        </div>
+
+        <h3>Account Settings</h3>
+        <ul>
+            <li><a href="/edit-profile">Edit Profile</a></li>
+            <li><a href="/change-password">Change Password</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+{% endblock %}

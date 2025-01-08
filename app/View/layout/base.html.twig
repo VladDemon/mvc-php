@@ -22,7 +22,7 @@
                             </ul>
                             {% if user_data %}
                                 <div style='display: flex; gap : 10px;'>
-                                    <span>Ваш профиль</span>{{ user_data['name'] }}
+                                    <span>Ваш профиль</span><a href='/profile'>{{ user_data['name'] }}</a>
                                     <form method="get" action='/logout'>
                                         <button style='background-color : transparent; border: none; border: 2px solid black; border-radius: 4px;'>LogOut</button>
                                     </form>

@@ -85,7 +85,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
                 }
             }
         } else {
-            window.location.href = '/';
+            window.location.href = '/profile';
         }
     })
     .catch(error => console.error('Ошибка:', error));
@@ -125,7 +125,7 @@ document.getElementById('register-form').addEventListener('submit', function(eve
                 }
             }
         } else {
-            window.location.href = '/';
+            window.location.href = '/signIn';
         }
     })
     .catch(error => console.error('Ошибка:', error));
