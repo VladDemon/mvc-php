@@ -63,7 +63,7 @@ class AuthController extends Controller
                 'name' => $user['name'],
                 'email' => $user['email']
             ];
-            header("Location: /");
+            header("Location: /profile");
         } catch (Exception $e) {
             echo "Ошибка: " . $e->getMessage();
         }

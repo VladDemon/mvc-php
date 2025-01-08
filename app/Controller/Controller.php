@@ -19,8 +19,8 @@ abstract class Controller
 
         $this->viewRenderer = new ViewRenderer();
     }
-    public function loadAr($query) {
-        return $this->db->get_assoc_data_by_query($query);
+    public function loadAr($query, $attr) {
+        return $this->db->get_assoc_data_by_query($query, $attr);
     }
     public function view ($file, $data = []) {
         return $this->viewRenderer->view($file, $data);

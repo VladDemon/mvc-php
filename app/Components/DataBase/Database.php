@@ -27,10 +27,10 @@ class Database implements DatabaseInterface
     public function getDb(): PDO {
         return $this->db;
     }
-    public function get_assoc_data_by_query ($query) : array {
+    public function get_assoc_data_by_query ($query, array $attr) : array {
         $db = $this->getDb();
         $query = $db->prepare($query);
-        $query->execute();
+        $query->execute($attr);
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
