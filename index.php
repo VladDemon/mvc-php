@@ -5,3 +5,4 @@ error_reporting(E_ALL);
 include $_SERVER['DOCUMENT_ROOT']. "/config.php";
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ .'/router/routes.php';
+// test
