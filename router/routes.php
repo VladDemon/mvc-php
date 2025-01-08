@@ -8,7 +8,7 @@ App\Services\Router::get("/logout", "AuthController@logout");
 App\Services\Router::post("/auth/register", App\Controller\AuthController::class, "register", [
     new App\Components\Middleware\ValidateMiddleware(
         [
-            'name' => 'min:10',
+            'name' => 'min:6',
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]

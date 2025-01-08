@@ -19,9 +19,11 @@ class ValidateMiddleware implements MiddlewareInterface
 
         if (!empty($errors)) {
             header('Content-Type: application/json');
+            http_response_code(400);
             echo json_encode(['success' => false, 'errors' => $errors]);
             exit;
         }
+        
         return $next($request);
     }
 
@@ -29,25 +31,49 @@ class ValidateMiddleware implements MiddlewareInterface
     {
         $errors = [];
         foreach ($rules as $field => $rule) {
-            if(str_contains($rule, 'min')) {
-                $rule_values = explode(":", $rule );
-                if(count(str_split($request[$field])) < $rule_values[1]) {
-                    $errors[$field] = 'min length of ' . $field . ' is ' . $rule_values[1];
-                }
+            if (!isset($request[$field])) {
+                $request[$field] = null; 
             }
-            if(str_contains($rule, 'max')) {
-                $rule_values = explode(":", $rule );
-                if(count(str_split($request[$field])) > $rule_values[1]) {
-                    $errors[$field] = 'max length of ' . $field . ' is ' . $rule_values[1];
-                }
-            }
-            if ($rule === 'required' && empty($request[$field])) {
-                $errors[$field] = "$field is required.";
-            }
-            if ($rule === 'email' && !filter_var($request[$field], FILTER_VALIDATE_EMAIL)) {
-                $errors[$field] = "$field must be a valid email.";
-            }
+
+            $this->checkMinLength($request, $field, $rule, $errors);
+            $this->checkMaxLength($request, $field, $rule, $errors);
+            $this->checkRequired($request, $field, $rule, $errors);
+            $this->checkEmail($request, $field, $rule, $errors);
         }
         return $errors;
+    }
+
+    private function checkMinLength(array $request, string $field, string $rule, array &$errors): void
+    {
+        if (str_contains($rule, 'min')) {
+            $ruleValues = explode(":", $rule);
+            if (count(str_split($request[$field])) < (int)$ruleValues[1]) {
+                $errors[$field] = 'Min length of ' . $field . ' is ' . $ruleValues[1];
+            }
+        }
+    }
+
+    private function checkMaxLength(array $request, string $field, string $rule, array &$errors): void
+    {
+        if (str_contains($rule, 'max')) {
+            $ruleValues = explode(":", $rule);
+            if (count(str_split($request[$field])) > (int)$ruleValues[1]) {
+                $errors[$field] = 'Max length of ' . $field . ' is ' . $ruleValues[1];
+            }
+        }
+    }
+
+    private function checkRequired(array $request, string $field, string $rule, array &$errors): void
+    {
+        if ($rule === 'required' && empty($request[$field])) {
+            $errors[$field] = "$field is required.";
+        }
+    }
+
+    private function checkEmail(array $request, string $field, string $rule, array &$errors): void
+    {
+        if ($rule === 'email' && !empty($request[$field]) && !filter_var($request[$field], FILTER_VALIDATE_EMAIL)) {
+            $errors[$field] = "$field must be a valid email.";
+        }
     }
 }
