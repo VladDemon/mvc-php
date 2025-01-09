@@ -3,9 +3,9 @@ App\Services\Router::get("/","IndexController@index", [App\Components\Middleware
 App\Services\Router::get('/test', 'TestController@index', [App\Components\Middleware\AuthMiddleware::class]);
 App\Services\Router::get('/signIn','LoginController@index');
 App\Services\Router::get("/404", "Controller404@index");
-App\Services\Router::get("/logout", "AuthController@logout");
-App\Services\Router::get('/profile', "ProfileController@index", [App\Components\Middleware\AuthMiddleware::class]);
-
+App\Services\Router::get("/logout", "AuthController@logout", [App\Components\Middleware\AuthMiddleware::class]);
+App\Services\Router::get('/profile', "Profile\ProfileController@index", [App\Components\Middleware\AuthMiddleware::class]);
+App\Services\Router::get('/profile/edit', 'Profile\EditProfileController@page', [App\Components\Middleware\AuthMiddleware::class]);
 
 
 
@@ -24,6 +24,9 @@ App\Services\Router::post("/auth/login", App\Controller\AuthController::class, "
         'password' => 'required|min:6'
     ])
 ]);
+App\Services\Router::post("/profile/edit/password", App\Controller\Profile\EditProfileController::class, 'pass_change');
+App\Services\Router::post("/profile/edit/name-change", App\Controller\Profile\EditProfileController::class, 'name_change');
+App\Services\Router::post("/profile/edit/email-change", App\Controller\Profile\EditProfileController::class, 'email_change');
 
 App\Services\Router::enable();
 ?>
