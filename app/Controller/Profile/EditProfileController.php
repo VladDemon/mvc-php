@@ -10,11 +10,11 @@ class EditProfileController extends Controller
     {
         
     }
-    public function name_change () 
+    public function name_change ($data) 
     {
-
+        
     }
-    public function email_change () 
+    public function email_change ($data) 
     {
 
     }
