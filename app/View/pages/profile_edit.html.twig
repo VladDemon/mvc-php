@@ -4,15 +4,15 @@
     <div class="container mt-5">
         <h1 class="mb-4">{{ title }}</h1>
 
-        <form action="/" method="POST" class="mb-4">
+        <form id='name-form' action="/profile/edit/name/change" method="POST" class="mb-4">
             <div class="mb-3">
                 <label for="username" class="form-label">Новое имя пользователя:</label>
-                <input type="text" id="username" name="username" class="form-control" value="{{ user.username }}" required>
+                <input type="text" id="username" name="name" class="form-control" value="{{ user.username }}" required>
             </div>
             <button type="submit" class="btn btn-primary">Сохранить имя пользователя</button>
         </form>
 
-        <form action="/" method="POST" class="mb-4">
+        <form id='email-form' action="/profile/edit/email/change" method="POST" class="mb-4">
             <div class="mb-3">
                 <label for="email" class="form-label">Новая электронная почта:</label>
                 <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
@@ -20,7 +20,7 @@
             <button type="submit" class="btn btn-primary">Сохранить электронную почту</button>
         </form>
 
-        <form action="/" method="POST" class="mb-4">
+        <form id='password-form' action="/profile/edit/password/change" method="POST" class="mb-4">
             <div class="mb-3">
                 <label for="password" class="form-label">Новый пароль:</label>
                 <input type="password" id="password" name="password" class="form-control" required>
@@ -39,7 +39,65 @@
 
 <script>
 
+var field = document.querySelector('#username');
+document.getElementById('name-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    let action = this.action;
+    fetch(action, {
+        method : 'POST',
+        body : new FormData(this)
+    })
+    .then(data => data.json())
+    .then(response => {
+        console.log(response);
+        if(!response.success) {
+            field.style.border = "2px solid red";
+        } else {
+            field.style.border = "2px solid green";
+        }
+    })
+})
 
 
+
+var field_email = document.querySelector('#email');
+document.getElementById('email-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    let action = this.action;
+    fetch(action, {
+        method : 'POST',
+        body : new FormData(this)
+    })
+    .then(data => data.json())
+    .then(response => {
+        console.log(response);
+        if(!response.success) {
+            field_email.style.border = "2px solid red";
+        } else {
+            field_email.style.border = "2px solid green";
+        }
+    })
+})
+
+
+var field_password1 = document.querySelector('#password');
+var field_password2 = document.querySelector('#confirm_password');
+
+document.getElementById('password-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    var password1 = field_password1.value;
+    var password2 = field_password2.value;
+    let action = this.action;
+    if (password1 === password2) {
+        fetch(action, {
+            method : 'post',
+            body : new FormData(this)
+        })
+        .then(data => console.log(data.json()))
+    } else {
+        console.log('Пароли не совпадают!');
+    }
+});
 </script>
 {% endblock %}

@@ -34,4 +34,14 @@ class Database implements DatabaseInterface
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function writeData(string $query, array $attr) : bool {
+        $db = $this->getDb();
+        $query = $db->prepare($query);
+        $result = $query->execute($attr);
+
+        if(!$result) {
+            return false;
+        }
+        return true;
+    }
 }
