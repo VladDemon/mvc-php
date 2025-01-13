@@ -22,6 +22,10 @@ abstract class Controller
     public function loadAr($query, $attr) {
         return $this->db->get_assoc_data_by_query($query, $attr);
     }
+    public function writeData(string $query, array $attr)
+    {
+        return $this->db->writeData($query, $attr);
+    }
     public function view ($file, $data = []) {
         return $this->viewRenderer->view($file, $data);
     }

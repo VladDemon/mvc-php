@@ -8,4 +8,5 @@ interface DatabaseInterface
 {
     public function getDb () : PDO;
     public function get_assoc_data_by_query ($query, array $attr) : array;
+    function writeData(string $query, array $attr) : bool;
 }

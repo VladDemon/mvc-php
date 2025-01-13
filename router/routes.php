@@ -24,9 +24,21 @@ App\Services\Router::post("/auth/login", App\Controller\AuthController::class, "
         'password' => 'required|min:6'
     ])
 ]);
-App\Services\Router::post("/profile/edit/password", App\Controller\Profile\EditProfileController::class, 'pass_change');
-App\Services\Router::post("/profile/edit/name-change", App\Controller\Profile\EditProfileController::class, 'name_change');
-App\Services\Router::post("/profile/edit/email-change", App\Controller\Profile\EditProfileController::class, 'email_change');
+App\Services\Router::post("/profile/edit/password/change", App\Controller\Profile\EditProfileController::class, 'pass_change', [
+    new App\Components\Middleware\ValidateMiddleware([
+        'password' => 'required|min:6'
+    ])
+]);
+App\Services\Router::post("/profile/edit/name/change", App\Controller\Profile\EditProfileController::class, 'name_change', [
+    new App\Components\Middleware\ValidateMiddleware([
+        'name'  => "required|min:6"
+    ])
+]);
+App\Services\Router::post("/profile/edit/email/change", App\Controller\Profile\EditProfileController::class, 'email_change', [
+    new App\Components\Middleware\ValidateMiddleware([
+        'email' => 'required|email',
+    ])
+]);
 
 App\Services\Router::enable();
 ?>
