@@ -11,21 +11,21 @@
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="/">Home</a>
+                        <a class="navbar-brand" href="/">Главная</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/test">Test</a>
+                                    <a class="nav-link" href="/test">Тестовая</a>
                                 </li>
                             </ul>
                             {% if user_data %}
                                 <div style='display: flex; gap : 10px;'>
                                     <span>Ваш профиль</span><a href='/profile'>{{ user_data['name'] }}</a>
                                     <form method="get" action='/logout'>
-                                        <button style='background-color : transparent; border: none; border: 2px solid black; border-radius: 4px;'>LogOut</button>
+                                        <button style='background-color : transparent; border: none; border: 2px solid black; border-radius: 4px;'>Выйти</button>
                                     </form>
                                 </div>
                             {% else %}
