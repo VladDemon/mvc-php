@@ -15,7 +15,6 @@ class AuthController extends Controller
         $password = password_hash($data['password'], PASSWORD_BCRYPT);
 
         try {
-            $this->ensureUsersTableExists();
 
             $stmt = $this->db->getDb()->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
             $stmt->execute(['email' => $email]);
@@ -79,16 +78,5 @@ class AuthController extends Controller
             unlink($sesFile);
         }
         Router::redirect("/signIn");
-    }
-
-    private function ensureUsersTableExists()
-    {
-        $this->db->getDb()->exec("CREATE TABLE IF NOT EXISTS users (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )");
     }
 }
